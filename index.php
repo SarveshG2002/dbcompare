@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Sorry, there was an error uploading Database 2 SQL File.<br>";
     }
 
+    header("Location: comparefile.php");
+
     // Perform database comparison or any other processing here
 }
 ?>
