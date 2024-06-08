@@ -99,11 +99,35 @@ function compareTables($tables1, $tables2) {
                 foreach ($tables2[$tableName] as $column2) {
                     if ($column2['Field'] == $columnName) {
                         $found = true;
-                        if ($column != $column2) {
-                            $differences[$tableName]['column'][$columnName] = [
-                                'db1' => $column,
-                                'db2' => $column2
+                        $columnDifferences = [];
+
+                        if ($column['Type'] != $column2['Type']) {
+                            $columnDifferences['Type'] = [
+                                'db1' => $column['Type'],
+                                'db2' => $column2['Type']
                             ];
+                        }
+                        if ($column['Null'] != $column2['Null']) {
+                            $columnDifferences['Null'] = [
+                                'db1' => $column['Null'],
+                                'db2' => $column2['Null']
+                            ];
+                        }
+                        if ($column['Default'] != $column2['Default']) {
+                            $columnDifferences['Default'] = [
+                                'db1' => $column['Default'],
+                                'db2' => $column2['Default']
+                            ];
+                        }
+                        if ($column['Extra'] != $column2['Extra']) {
+                            $columnDifferences['Extra'] = [
+                                'db1' => $column['Extra'],
+                                'db2' => $column2['Extra']
+                            ];
+                        }
+
+                        if (!empty($columnDifferences)) {
+                            $differences[$tableName]['column'][$columnName] = $columnDifferences;
                         }
                         break;
                     }
@@ -136,4 +160,9 @@ echo "<pre>";
 // print_r($tables2);
 $differences = compareTables($tables1, $tables2);
 print_r($differences);
+
+
+
+
+
 ?>
