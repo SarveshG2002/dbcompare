@@ -7,7 +7,8 @@ $db1 = 'dbcompare1';
 $db2 = 'dbcompare2';
 
 // Function to drop all tables in a database
-function dropAllTables($host, $username, $password, $dbName) {
+function dropAllTables($host, $username, $password, $dbName)
+{
     $conn = new mysqli($host, $username, $password, $dbName);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -24,7 +25,8 @@ function dropAllTables($host, $username, $password, $dbName) {
 }
 
 // Function to upload SQL file to database
-function uploadSQLFile($host, $username, $password, $dbName, $sqlFilePath) {
+function uploadSQLFile($host, $username, $password, $dbName, $sqlFilePath)
+{
     // Drop all existing tables
     dropAllTables($host, $username, $password, $dbName);
 
@@ -62,7 +64,8 @@ function uploadSQLFile($host, $username, $password, $dbName, $sqlFilePath) {
 // die();
 
 // Function to get table structure
-function getTableStructure($host, $username, $password, $dbName) {
+function getTableStructure($host, $username, $password, $dbName)
+{
     $conn = new mysqli($host, $username, $password, $dbName);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -85,9 +88,10 @@ function getTableStructure($host, $username, $password, $dbName) {
 
 
 // Function to compare table structures
-function compareTables($tables1, $tables2) {
+function compareTables($tables1, $tables2)
+{
     $differences = [];
-    
+
     // Iterate through the first database tables
     foreach ($tables1 as $tableName => $columns) {
         if (!isset($tables2[$tableName])) {
@@ -155,66 +159,66 @@ $tables1 = getTableStructure($host, $username, $password, $db1);
 $tables2 = getTableStructure($host, $username, $password, $db2);
 
 // Display table structures
-echo "<pre>";
+// echo "<pre>";
 // print_r($tables1);
 // print_r($tables2);
 $differences = compareTables($tables1, $tables2);
-print_r($differences);
+// print_r($differences);
 
+?>
 
-
-
-function displayDifferences($differences) {
-    echo '<div class="container mt-5">';
-    echo '<h2>Database Comparison Results</h2>';
-    echo '<table class="table table-bordered">';
-    echo '<thead><tr><th>Table</th><th>Type</th><th>Details</th></tr></thead>';
-    echo '<tbody>';
-
-    foreach ($differences as $table => $diff) {
-        if ($diff[0] == "table") {
-            echo '<tr><td>' . $table . '</td><td>Table</td><td>' . $diff[1] . '</td></tr>';
-        } else {
-            foreach ($diff['column'] as $column => $details) {
-                if (is_array($details)) {
-                    foreach ($details as $property => $value) {
-                        echo '<tr>';
-                        echo '<td>' . $table . ' -> ' . $column . '</td>';
-                        echo '<td>' . ucfirst($property) . '</td>';
-                        echo '<td>db1: ' . $value['db1'] . ' | db2: ' . $value['db2'] . '</td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr>';
-                    echo '<td>' . $table . ' -> ' . $column . '</td>';
-                    echo '<td>Column</td>';
-                    echo '<td>' . $details . '</td>';
-                    echo '</tr>';
-                }
-            }
-        }
-    }
-
-    echo '</tbody>';
-    echo '</table>';
-    echo '</div>';
-}
-
-// HTML header
-echo '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Comparison Tool</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Database Comparison Results</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>';
 
-// Display the differences
-displayDifferences($differences);
+<body>
+    <div class="container mt-5">
+        <h2>Database Comparison Results</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Table</th>
+                    <th>Type</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($differences as $table => $diff) { ?>
+                    <?php if (isset($diff[0]) && $diff[0] == "table") { ?>
+                        <tr>
+                            <td><?= $table ?></td>
+                            <td>Table</td>
+                            <td><?= $diff[1] ?></td>
+                        </tr>
+                    <?php } else { ?>
+                        <?php foreach ($diff['column'] as $column => $details) { ?>
+                            <?php if (is_array($details)) { ?>
+                                <?php foreach ($details as $property => $value) { ?>
+                                    <tr>
+                                        <td><?= $table ?> -> <?= $column ?></td>
+                                        <td><?= ucfirst($property) ?></td>
+                                        <td>db1: <?= $value['db1'] ?> | db2: <?= $value['db2'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td><?= $table ?> -> <?= $column ?></td>
+                                    <td>Column</td>
+                                    <td><?= $details ?></td>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</body>
 
-// HTML footer
-echo '</body></html>';
-
-?>
+</html>
