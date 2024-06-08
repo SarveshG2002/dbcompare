@@ -164,5 +164,57 @@ print_r($differences);
 
 
 
+function displayDifferences($differences) {
+    echo '<div class="container mt-5">';
+    echo '<h2>Database Comparison Results</h2>';
+    echo '<table class="table table-bordered">';
+    echo '<thead><tr><th>Table</th><th>Type</th><th>Details</th></tr></thead>';
+    echo '<tbody>';
+
+    foreach ($differences as $table => $diff) {
+        if ($diff[0] == "table") {
+            echo '<tr><td>' . $table . '</td><td>Table</td><td>' . $diff[1] . '</td></tr>';
+        } else {
+            foreach ($diff['column'] as $column => $details) {
+                if (is_array($details)) {
+                    foreach ($details as $property => $value) {
+                        echo '<tr>';
+                        echo '<td>' . $table . ' -> ' . $column . '</td>';
+                        echo '<td>' . ucfirst($property) . '</td>';
+                        echo '<td>db1: ' . $value['db1'] . ' | db2: ' . $value['db2'] . '</td>';
+                        echo '</tr>';
+                    }
+                } else {
+                    echo '<tr>';
+                    echo '<td>' . $table . ' -> ' . $column . '</td>';
+                    echo '<td>Column</td>';
+                    echo '<td>' . $details . '</td>';
+                    echo '</tr>';
+                }
+            }
+        }
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+}
+
+// HTML header
+echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Comparison Tool</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>';
+
+// Display the differences
+displayDifferences($differences);
+
+// HTML footer
+echo '</body></html>';
 
 ?>
