@@ -51,45 +51,69 @@ function dropAllTables($host, $username, $password, $dbName)
 function uploadSQLFile($host, $username, $password, $dbName, $sqlFilePath)
 {
     // Drop all existing tables
-    dropAllTables($host, $username, $password, $dbName);
+    try{
+        dropAllTables($host, $username, $password, $dbName);
 
-    // Create connection
-    $conn = new mysqli($host, $username, $password, $dbName);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        // Create connection
+        $conn = new mysqli($host, $username, $password, $dbName);
+    
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        // Read SQL file
+        $sql = file_get_contents($sqlFilePath);
+        if ($sql === false) {
+            die("Error reading SQL file: $sqlFilePath<br>");
+        }
+    
+        // Execute SQL queries
+        if ($conn->multi_query($sql) === TRUE) {
+            do {
+                // Flush multi_queries
+                if ($result = $conn->store_result()) {
+                    $result->free();
+                }
+            } while ($conn->more_results() && $conn->next_result());
+        } else {
+            echo "Error uploading SQL file to $dbName database: " . $conn->error . "<br>";
+        }
+    
+        // Close connection
+        $conn->close();
     }
-
-    // Read SQL file
-    $sql = file_get_contents($sqlFilePath);
-    if ($sql === false) {
-        die("Error reading SQL file: $sqlFilePath<br>");
+    catch (PDOException $e) {
+        // Handle errors
+        // echo "Error: " . $e->getMessage();
+        // return false;
+        
+        dropAllTables($host, $username, $password, $dbName);
+        // dropAllTables($host, $username2, $password2, $db2);
+        header("Location: index.php?error='Error'");
     }
-
-    // Execute SQL queries
-    if ($conn->multi_query($sql) === TRUE) {
-        do {
-            // Flush multi_queries
-            if ($result = $conn->store_result()) {
-                $result->free();
-            }
-        } while ($conn->more_results() && $conn->next_result());
-    } else {
-        echo "Error uploading SQL file to $dbName database: " . $conn->error . "<br>";
-    }
-
-    // Close connection
-    $conn->close();
 }
 
-// Upload db1.sql to dbcompare1 database
-$db1FilePath = 'testfiles/db1.sql';
-uploadSQLFile($host, $username1, $password1, $db1, $db1FilePath);
 
-// Upload db2.sql to dbcompare2 database
-$db2FilePath = 'testfiles/db2.sql';
-uploadSQLFile($host, $username2, $password2, $db2, $db2FilePath);
+try {
+    // Upload db1.sql to dbcompare1 database
+    $db1FilePath = 'testfiles/db1.sql';
+    uploadSQLFile($host, $username1, $password1, $db1, $db1FilePath);
+
+    // Upload db2.sql to dbcompare2 database
+    $db2FilePath = 'testfiles/db2.sql';
+    uploadSQLFile($host, $username2, $password2, $db2, $db2FilePath);
+} catch (PDOException $e) {
+    // Handle errors
+    // echo "Error: " . $e->getMessage();
+    // return false;
+    
+    dropAllTables($host, $username1, $password1, $db1);
+    dropAllTables($host, $username2, $password2, $db2);
+    header("Location: index.php?error='Error'");
+}
+
+// echo "hello";
 
 // Function to get table structure
 function getTableStructure($host, $username, $password, $dbName)
@@ -105,10 +129,16 @@ function getTableStructure($host, $username, $password, $dbName)
         die("Error getting tables from $dbName: " . $conn->error . "<br>");
     }
 
+    
+
     while ($row = $result->fetch_row()) {
         $tableName = $row[0];
+        print_r($row);
         $tableStructure = [];
-        $columnsResult = $conn->query("SHOW COLUMNS FROM $tableName");
+        $columnsResult = $conn->query("SHOW COLUMNS FROM '$tableName'");
+        echo "<br>";
+        print_r("SHOW COLUMNS FROM '$tableName'");
+        echo "<br>";
         if (!$columnsResult) {
             die("Error getting columns from $tableName: " . $conn->error . "<br>");
         }
@@ -187,12 +217,24 @@ function compareTables($tables1, $tables2)
     return $differences;
 }
 
-// Get table structures
+try{
+    echo "hii";
+    // Get table structures
 $tables1 = getTableStructure($host, $username1, $password1, $db1);
 $tables2 = getTableStructure($host, $username2, $password2, $db2);
 
 // Display table structures
 $differences = compareTables($tables1, $tables2);
+}
+catch (PDOException $e) {
+    // Handle errors
+    // echo "Error: " . $e->getMessage();
+    // return false;
+    
+    dropAllTables($host, $username1, $password1, $db1);
+    dropAllTables($host, $username2, $password2, $db2);
+    header("Location: index.php?error='Error'");
+}
 
 // Drop all tables after comparison
 dropAllTables($host, $username1, $password1, $db1);
@@ -201,12 +243,15 @@ dropAllTables($host, $username2, $password2, $db2);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Comparison Results</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container mt-5">
         <h2>Database Comparison Results</h2>
@@ -250,4 +295,5 @@ dropAllTables($host, $username2, $password2, $db2);
         </table>
     </div>
 </body>
+
 </html>

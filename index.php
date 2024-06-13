@@ -99,3 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </html>
 
+<script>
+    <?php
+    if(!empty($_GET) && isset($_GET["error"])){
+        ?>
+        alert("Can't Upload Database");
+        window.location.reload();
+        <?php
+    }
+    ?>
+</script>
+
