@@ -21,6 +21,19 @@ $username2 = 'root';
 $password2 = '';
 $db2 = 'dbcompare2';
 
+
+function deleteFile($filePath) {
+    if (file_exists($filePath)) {
+        if (unlink($filePath)) {
+            // echo "File '$filePath' deleted successfully.<br>";
+        } else {
+            // echo "Sorry, there was an error deleting file '$filePath'.<br>";
+        }
+    } else {
+        // echo "File '$filePath' does not exist.<br>";
+    }
+}
+
 // Function to drop all tables in a database
 function dropAllTables($host, $username, $password, $dbName)
 {
@@ -36,7 +49,8 @@ function dropAllTables($host, $username, $password, $dbName)
     $result = $conn->query("SHOW TABLES");
     if ($result) {
         while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            $conn->query("DROP TABLE IF EXISTS $row[0]");
+            // echo "DROP TABLE IF EXISTS `$row[0]` <br>";
+            $conn->query("DROP TABLE IF EXISTS `$row[0]`");
         }
     }
 
@@ -239,6 +253,9 @@ catch (PDOException $e) {
 // Drop all tables after comparison
 dropAllTables($host, $username1, $password1, $db1);
 dropAllTables($host, $username2, $password2, $db2);
+
+deleteFile("testfiles/db1.sql");
+deleteFile("testfiles/db2.sql");
 ?>
 
 <!DOCTYPE html>
@@ -254,7 +271,9 @@ dropAllTables($host, $username2, $password2, $db2);
 
 <body>
     <div class="container mt-5">
+    <button class="btn btn-primary mb-3" onclick="history.back()">Back</button>
         <h2>Database Comparison Results</h2>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
