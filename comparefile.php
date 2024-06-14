@@ -133,12 +133,12 @@ function getTableStructure($host, $username, $password, $dbName)
 
     while ($row = $result->fetch_row()) {
         $tableName = $row[0];
-        print_r($row);
+        // print_r($row);
         $tableStructure = [];
-        $columnsResult = $conn->query("SHOW COLUMNS FROM '$tableName'");
-        echo "<br>";
-        print_r("SHOW COLUMNS FROM '$tableName'");
-        echo "<br>";
+        $columnsResult = $conn->query("SHOW COLUMNS FROM `$tableName`");
+        // echo "<br>";
+        // print_r("SHOW COLUMNS FROM '$tableName'");
+        // echo "<br>";
         if (!$columnsResult) {
             die("Error getting columns from $tableName: " . $conn->error . "<br>");
         }
@@ -218,7 +218,7 @@ function compareTables($tables1, $tables2)
 }
 
 try{
-    echo "hii";
+    // echo "hii";
     // Get table structures
 $tables1 = getTableStructure($host, $username1, $password1, $db1);
 $tables2 = getTableStructure($host, $username2, $password2, $db2);

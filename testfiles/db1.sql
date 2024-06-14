@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 13, 2024 at 12:16 PM
+-- Generation Time: Jun 13, 2024 at 12:17 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -39,6 +39,10 @@ CREATE TABLE `chintamani-agency-buyers` (
   `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pincode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_states` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `previous_due` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tax_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -49,9 +53,9 @@ CREATE TABLE `chintamani-agency-buyers` (
 -- Dumping data for table `chintamani-agency-buyers`
 --
 
-INSERT INTO `chintamani-agency-buyers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(3, 'UCkNXIKken', '0630506306', 'W8ungCAMOX', 'uC8vFXrRFq', 'g5d4rqehul', 'xpPImKuj4U', 'EVSbcQ8nrr', '', '', 'Xdg0WAbTQy', 'UFO2qLCdWB', 'ZRPJT0F7uD', 'GCWAtmKDnB', '2024-06-11 13:27:02'),
-(4, 'Tushar Kandekar', '09987033179', 'admin@gmail.com', '200', 'wwdw', 'GUYF64564', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', 'India', 'maharashtra', '421306', '400', '45465', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '2024-06-13 16:04:00');
+INSERT INTO `chintamani-agency-buyers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `city`, `shipping_country`, `shipping_states`, `shipping_city`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
+(4, 'sHcrUr5OAs', '01234567890', 'something@nothing.com', 'kxpuFEJz0d', 'NwKJTlC0ox', NULL, 'something', 'India', 'andhra-pradesh', NULL, 'nothing', 'India', 'andhra-pradesh', 'nothing', 'hARB3qLYpB', 'YG8VF21YRW', 'something', '2024-06-13 15:47:06'),
+(5, 'OfbxzONSDA', '01234567890', 'something@nothing.com', 'KVaRHEl2vC', 'EJ3vsyAin9', NULL, 'something', 'India', 'andhra-pradesh', NULL, 'nothing', 'India', 'andhra-pradesh', 'nothing', 'swLqT6ojne', '5xH8INiZiT', 'something', '2024-06-13 16:03:20');
 
 -- --------------------------------------------------------
 
@@ -71,22 +75,15 @@ CREATE TABLE `chintamani-agency-sales-order` (
   `transport` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `buyer_signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sales_signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `transport_commision` varchar(211) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gtotal` varchar(211) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `totalquantity` varchar(222) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `commission` varchar(222) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lr_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `chintamani-agency-sales-order`
 --
 
-INSERT INTO `chintamani-agency-sales-order` (`id`, `order_no`, `order_date`, `supplier`, `buyer`, `gst`, `delivery_address`, `remarks`, `transport`, `buyer_signature`, `sales_signature`, `created_at`, `transport_commision`, `gtotal`, `totalquantity`, `commission`, `lr_no`) VALUES
-(1, 'SO1', '2024-06-13', '2', '3', 'g5d4rqehul', 'EVSbcQ8nrr', '', '5', '', '', '2024-06-13 16:53:06', '264.12', '13206', '21.3', '2', NULL),
-(2, '1', '2024-06-13', 'Supplier Name', 'Buyer Name', 'GST123456', '123 Buyer St, Buyer City', 'Sample remarks', 'Transport Company', 'BuyerSign.png', 'SalesSign.png', '2024-06-13 17:04:52', '500.00', '15000.00', '100.8587', '300.00', NULL),
-(3, 'SO2', '2024-06-13', '2', '4', 'wwdw', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', 'ok', '5', '', '', '2024-06-13 17:08:19', '83.6908', '4184.54', '41.84540', '2', NULL);
+INSERT INTO `chintamani-agency-sales-order` (`id`, `order_no`, `order_date`, `supplier`, `buyer`, `gst`, `delivery_address`, `remarks`, `transport`, `buyer_signature`, `sales_signature`, `created_at`) VALUES
+(12, 'SO1', '2024-06-10', '2', '3', 'nwaQsnt07i', 'j46mnnvyKO', 'meWKx1iaNS', '', '', '', '2024-06-13 13:10:08');
 
 -- --------------------------------------------------------
 
@@ -96,14 +93,14 @@ INSERT INTO `chintamani-agency-sales-order` (`id`, `order_no`, `order_date`, `su
 
 CREATE TABLE `chintamani-agency-sales-order-details` (
   `id` int NOT NULL,
-  `sales_order_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `style_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rate` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `discount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sales_order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `style_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rate` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -112,9 +109,9 @@ CREATE TABLE `chintamani-agency-sales-order-details` (
 --
 
 INSERT INTO `chintamani-agency-sales-order-details` (`id`, `sales_order_id`, `style_no`, `description`, `quantity`, `rate`, `discount`, `total`, `note`, `created_at`) VALUES
-(1, '1', '1', 'ok', '21.3000', '620', '13206', '', '', '2024-06-13 16:53:06'),
-(2, '3', '1', '', '20.5454', '100', '2054.54', '', '', '2024-06-13 17:08:19'),
-(3, '3', '2', '', '21.3000', '100', '2130', '', '', '2024-06-13 17:08:19');
+(6, '10', 'kGOiOdQPXj', 'gevoqARBn7', '133', '23', '', 'ztJ15ersAh', 'avXHWDBjQ1', '2024-06-13 13:01:35'),
+(7, '11', 'f5oqqVcRa5', 'X5e64JPFY0', '133', '23', '150355', '', 'gpxpgwaOw5', '2024-06-13 13:07:00'),
+(8, '12', 'RPbwsC4BKR', 'C6seod0Pga', '133', '23', '074413', '', '6weOC0bqor', '2024-06-13 13:10:08');
 
 -- --------------------------------------------------------
 
@@ -134,6 +131,10 @@ CREATE TABLE `chintamani-agency-sellers` (
   `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pincode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_states` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `previous_due` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tax_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -144,8 +145,10 @@ CREATE TABLE `chintamani-agency-sellers` (
 -- Dumping data for table `chintamani-agency-sellers`
 --
 
-INSERT INTO `chintamani-agency-sellers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(2, 'Sarvesh Gamdhere', '0694541098', 'DBuRI3By4C', '2', 'dJIIXMfjGp', 'ZYufAmCJ0g', ' C0NbHi2hqk', 'India', 'andhra-pradesh', 'H93GgXXoLf', 'rIp35KcYqj', 'sCehlKXcOp', 'dGWATo9Gxm', '2024-06-11 15:54:09');
+INSERT INTO `chintamani-agency-sellers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `city`, `shipping_country`, `shipping_states`, `shipping_city`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
+(3, 'CbllbvIDd3', '7153114102', 'hCl3Ww6f28', 'f8uRIwS33h', 'KBt7jL57w5', NULL, ' gbgfbbgfgfbbgfgbfbgfbgfg', 'India', 'andhra-pradesh', NULL, 'YsXj1kuTDF', 'India', 'andhra-pradesh', 'YsXj1kuTDF', '4vBJZKRWGC', 'xKaf7QLCFn', ' gbgfbbgfgfbbgfgbfbgfbgfg', '2024-06-13 15:33:16'),
+(4, 'ergergferge', '01234567890', 'something@nothing.com', '', '', NULL, 'something', 'India', 'andhra-pradesh', NULL, 'nothing', 'India', 'andhra-pradesh', 'nothing', '', '', 'something', '2024-06-13 15:46:28'),
+(5, 'NTpMDENQOW', '01234567890', 'something@nothing.com', 'Tm8aWvyWyL', 'UO1KQ91DGJ', NULL, 'something', 'India', 'andhra-pradesh', NULL, 'nothing', 'India', 'andhra-pradesh', 'nothing', 'fALyXWvSVM', 'yCk1l9yuCS', 'something', '2024-06-13 15:46:53');
 
 -- --------------------------------------------------------
 
@@ -155,10 +158,10 @@ INSERT INTO `chintamani-agency-sellers` (`id`, `name`, `phone`, `email`, `commis
 
 CREATE TABLE `chintamani-agency-settings` (
   `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -198,11 +201,7 @@ CREATE TABLE `chintamani-agency-transport` (
 --
 
 INSERT INTO `chintamani-agency-transport` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(1, 'jL5pxAq7Qs', '5344935648', '85j4l27FT8', '2.5', '06J0VGATS4', 'XoRMQI8dzD', ' XEEKb4giTU', 'India', 'andhra-pradesh', '9k2ws9EXf2', NULL, 'EFnzvW2M1u', NULL, '2024-06-11 13:57:21'),
-(2, 'Karthik  Shettigar ', '09987033179', 'chellascafe@gmail.com', '10', 'KJGKUG325346', 'DFG79987', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', 'India', 'maharashtra', '421306', NULL, '45465', NULL, '2024-06-13 16:04:33'),
-(3, 'Tushar Kandekar', '09987033179', 'admin@gmail.com', '10', 'wwdw', NULL, 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', 'India', 'maharashtra', '421306', NULL, '45465', NULL, '2024-06-13 16:12:03'),
-(4, 'sarves', '', '', '2', '', NULL, '  ', 'India', 'andhra-pradesh', '', NULL, '', NULL, '2024-06-13 16:39:17'),
-(5, 'Imran', '1234567890', 'imran@gmail.com', '2', '', NULL, ' ', 'India', 'andhra-pradesh', '', NULL, '', NULL, '2024-06-13 16:52:27');
+(1, 'jL5pxAq7Qs', '5344935648', '85j4l27FT8', 'Sljdi1xqFd', '06J0VGATS4', 'XoRMQI8dzD', 'XEEKb4giTU', '', '', '9k2ws9EXf2', 'TlVcnUrdpF', 'EFnzvW2M1u', '9zW35VYu6B', '2024-06-11 13:57:21');
 
 -- --------------------------------------------------------
 
@@ -385,13 +384,6 @@ CREATE TABLE `reshmi-clothing-company-buyers` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `reshmi-clothing-company-buyers`
---
-
-INSERT INTO `reshmi-clothing-company-buyers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(2, 'Tushar Kandekar', '09987033179', 'tushar@gmail.com', '200', 'KGHG456', 'GUYF64564', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '', '', '421306', '4000', '45465', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '2024-06-13 13:08:02');
-
 -- --------------------------------------------------------
 
 --
@@ -411,25 +403,6 @@ CREATE TABLE `reshmi-clothing-company-sales-order` (
   `buyer_signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sales_signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reshmi-clothing-company-sales-order-details`
---
-
-CREATE TABLE `reshmi-clothing-company-sales-order-details` (
-  `id` int NOT NULL,
-  `sales_order_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `style_no` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rate` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `discount` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `total` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -456,13 +429,6 @@ CREATE TABLE `reshmi-clothing-company-sellers` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `reshmi-clothing-company-sellers`
---
-
-INSERT INTO `reshmi-clothing-company-sellers` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(1, 'Sarvesh Gamdhere', '09987033179', 'sarvesh@gmail.com', '200', 'KJGKUG325346', 'GUYF64564', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '', '', '421306', '400', '45465', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '2024-06-13 13:07:28');
-
 -- --------------------------------------------------------
 
 --
@@ -486,13 +452,6 @@ CREATE TABLE `reshmi-clothing-company-transport` (
   `delivery_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `reshmi-clothing-company-transport`
---
-
-INSERT INTO `reshmi-clothing-company-transport` (`id`, `name`, `phone`, `email`, `commission`, `gst`, `pan`, `address`, `country`, `state`, `pincode`, `previous_due`, `tax_no`, `delivery_address`, `created_at`) VALUES
-(1, 'Karthik  Shettigar ', '09987033179', 'karthik@gmail.com', '200', 'KGHG456', 'DFG79987', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '', '', '421306', '400', '45465', 'saidham chawl ,room no. 7, chinchpada gown, kalyan east', '2024-06-13 13:08:32');
 
 -- --------------------------------------------------------
 
@@ -740,12 +699,6 @@ ALTER TABLE `reshmi-clothing-company-sales-order`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `reshmi-clothing-company-sales-order-details`
---
-ALTER TABLE `reshmi-clothing-company-sales-order-details`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `reshmi-clothing-company-sellers`
 --
 ALTER TABLE `reshmi-clothing-company-sellers`
@@ -807,25 +760,25 @@ ALTER TABLE `vishal-tradelink-users`
 -- AUTO_INCREMENT for table `chintamani-agency-buyers`
 --
 ALTER TABLE `chintamani-agency-buyers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `chintamani-agency-sales-order`
 --
 ALTER TABLE `chintamani-agency-sales-order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `chintamani-agency-sales-order-details`
 --
 ALTER TABLE `chintamani-agency-sales-order-details`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `chintamani-agency-sellers`
 --
 ALTER TABLE `chintamani-agency-sellers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `chintamani-agency-settings`
@@ -837,7 +790,7 @@ ALTER TABLE `chintamani-agency-settings`
 -- AUTO_INCREMENT for table `chintamani-agency-transport`
 --
 ALTER TABLE `chintamani-agency-transport`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `chintamani-agency-users`
@@ -885,31 +838,25 @@ ALTER TABLE `parshwanath-agency-users`
 -- AUTO_INCREMENT for table `reshmi-clothing-company-buyers`
 --
 ALTER TABLE `reshmi-clothing-company-buyers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reshmi-clothing-company-sales-order`
 --
 ALTER TABLE `reshmi-clothing-company-sales-order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `reshmi-clothing-company-sales-order-details`
---
-ALTER TABLE `reshmi-clothing-company-sales-order-details`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reshmi-clothing-company-sellers`
 --
 ALTER TABLE `reshmi-clothing-company-sellers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reshmi-clothing-company-transport`
 --
 ALTER TABLE `reshmi-clothing-company-transport`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reshmi-clothing-company-users`
